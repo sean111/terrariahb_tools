@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<project name="TerrariaHB" default="build" basedir="./">
+    <target name="wiki">
+        <echo message="Running wiki parser" />
+        <apply executable="php" osfamily="unix">
+            <filelist dir="./" files="wiki.php" />
+        </apply>
+    </target>
+    <target name="output">
+        <echo message="Creating output file"/>
+        <apply executable="php" osfamily="unix">
+            <filelist dir="./" files="output.php" />
+        </apply>
+    </target>
+    <target name="optpng">
+        <echo message="Optimizing png files"/>
+        <apply executable="optipng" osfamily="unix">
+            <arg value="-quiet"/>
+            <arg value="-o7"/>
+            <fileset dir="/srv/www/droid/terrariahb/img/">
+                <include name="**/*.png"/>
+            </fileset>
+        </apply>
+    </target>
+    <target name="opthtml">
+        <echo message="Optimizing HTML"/>
+        <apply executable="java" dir="/srv/www/droid/terrariahb/">            
+            <filelist dir="/srv/www/droid/terrariahb/" files="index.html"/>
+            <arg value="-jar"/>
+            <arg path="./htmlcompressor-1.1.jar"/>
+            <arg line="--type html"/>
+            <arg line="--remove-quotes"/>
+            <arg line="--compress-js"/>
+            <arg line="--compress-css"/>
+            <arg line="-o index.html"/>           
+        </apply>
+    </target>
+    <target name="build">
+        <antcall target="output"/>
+        <antcall target="optpng"/>
+    </target>
+
+</project>
+                    
