@@ -83,8 +83,8 @@ foreach(glob('Enviroments/*.html') as $filename) {
 }
 $htmlData=file_get_contents($template);
 
-$vnData=file_get_contents('version_notes.txt');
-$vnData=nl2br($vnData);
+$vnData=file_get_contents('version_notes.html');
+//$vnData=nl2br($vnData);
 
 $htmlData=str_replace("{VERSIONNOTES}",$vnData,$htmlData);
 $htmlData=str_replace("{CATLIST}",$catString,$htmlData);
