@@ -81,6 +81,22 @@ foreach(glob('Enviroments/*.html') as $filename) {
     $eString.=file_get_contents("$filename");
     $eString.="</div></div>";
 }
+
+//NPCs
+$nCatString="";
+$nString="";
+foreach(glob('NPCs/*.html') as $filename) {
+    $name=str_replace('.html','',$filename);
+    $name=str_replace('NPCs/','',$name);
+    $sname=str_replace(' ','',$name);
+    $nCatString.="<li><a href=\"#$sname\">$name</a></li>";
+    $nString.="<div id='$sname' data-role='page'>";
+    $nString.="<div data-role='header'><h1>$name</h1></div>";
+    $nString.="<div data-role='content'>";
+    $nString.=file_get_contents("$filename");
+    $nString.="</div></div>";
+}
+
 $htmlData=file_get_contents($template);
 
 $vnData=file_get_contents('version_notes.html');
@@ -95,6 +111,8 @@ $htmlData=str_replace("{MONSTERLIST}",$mListString,$htmlData);
 $htmlData=str_replace("{MONSTERS}",$mString,$htmlData);
 $htmlData=str_replace("{ECATLIST}",$eCatString,$htmlData);
 $htmlData=str_replace("{ENVS}",$eString,$htmlData);
+$htmlData=str_replace("{NPCLIST}",$nCatString,$htmlData);
+$htmlData=str_replace("{NPCS}",$nString,$htmlData);
 
 file_put_contents($outFile,$htmlData);
 
