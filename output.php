@@ -122,7 +122,7 @@ print "Output generated in ".round($ttime,4)."  seconds\n";
 
 function item($item) {
     global $iString;
-    global $db;
+    global $db;    
     $name=str_replace(" ","_",$item['name']);
     $name=str_replace("'","",$name);
     $iString.="<div id=\"$name\" data-role='page'>\n";
@@ -136,7 +136,8 @@ function item($item) {
         if($sql->num_rows>0) {
             $iString.="<table id='item_stats'><tr><th colspan='2'>Tool Stats</th></tr>\n";
             while($stats=$sql->fetch_array()) {
-                $iString.="<tr><td style='font-weight: bold;'>$stats[name]</td><td>$stats[value]</td></tr>\n";
+                $value=str_replace(array('{{cc','{{sc','{{gc'), array(' Copper Coin(s)',' Silver Coin(s)',' Gold Coin(s)'), $stats['value']);
+                $iString.="<tr><td style='font-weight: bold;'>$stats[name]</td><td>$value</td></tr>\n";
             }
             $iString.="</table>\n";
         }
