@@ -25,8 +25,7 @@ while($item=$sql->fetch_array()) {
         $iListString.="<div id='$tc' data-role='page'>\n<div data-role='header'><h1>$item[cat]</h1></div>\n<div data-role='content'>\n<ul data-role='listview' data-inset='false' data-filter='true'>\n";
         $cCat=$item['cat'];
     }
-	$item['nlink']=str_replace(" ","_",$item['name']);
-    $item['nlink']=str_replace("'","",$item['nlink']);
+	$item['nlink']=cleanString($item['name']);
     $iListString.="<li><a href=\"#$item[nlink]\">";
     if(!empty($item['img'])) {
         $iListString.="<img src=\"$item[img]\" alt=\"$item[name]\" width='20' height='20' class='ui-li-icon' />";
@@ -55,8 +54,7 @@ while($monster=$sql->fetch_array()) {
         $mListString.="<div id='$tc' data-role='page'>\n<div data-role='header'><h1>$monster[cat]</h1></div>\n<div data-role='content'>\n<ul data-role='listview' data-inset='false' data-filter='true'>\n";
         $cCat=$monster['cat'];
     }
-	$monster['nlink']=str_replace(" ","_",$monster['name']);
-    $monster['nlink']=str_replace("'","",$monster['nlink']);
+	$monster['nlink']=cleanString($monster['name']);
     $mListString.="<li><a href=\"#$monster[nlink]\">";
     if(!empty($monster['img'])) {
         $mListString.="<img src=\"$monster[img]\" alt=\"$monster[name]\" width='20' height='20' class='ui-li-icon' />";
@@ -78,7 +76,7 @@ foreach(glob('Enviroments/*.html') as $filename) {
     $eString.="<div id='$sname' data-role='page'>";
     $eString.="<div data-role='header'><h1>$name</h1></div>";
     $eString.="<div data-role='content'>";
-    $eString.=file_get_contents("$filename");
+    $eString.=preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",file_get_contents($filename));
     $eString.="</div></div>";
 }
 
@@ -93,7 +91,7 @@ foreach(glob('NPCs/*.html') as $filename) {
     $nString.="<div id='$sname' data-role='page'>";
     $nString.="<div data-role='header'><h1>$name</h1></div>";
     $nString.="<div data-role='content'>";
-    $nString.=file_get_contents("$filename");
+    $nString.=file_get_contents($filename);
     $nString.="</div></div>";
 }
 
@@ -123,9 +121,7 @@ print "Output generated in ".round($ttime,4)."  seconds\n";
 function item($item) {
     global $iString;
     global $db;    
-    $name=str_replace(" ","_",$item['name']);
-    $name=str_replace("'","",$name);
-    $iString.="<div id=\"$name\" data-role='page'>\n";
+    $iString.="<div id=\"$item[nlink]\" data-role='page'>\n";
     $iString.="<div data-role='header'><h1>$item[name]</h1></div>\n";
     $iString.="<div data-role='content'>\n";
     if($item['img']) {
@@ -169,7 +165,7 @@ function item($item) {
             if(!empty($ing['img'])) {
                 $iString.="<img src=\"$ing[img]\" alt=\"$ing[name]\" />";
             }
-            $iString.="$ing[name]</td><td>$ing[amt]</td></tr>";
+            $iString.="&nbsp;&nbsp;<div class='link'><a href='#".cleanString($ing['name'])."'>$ing[name]</a></div></td><td>$ing[amt]</td></tr>";
         }
         $iString.="<tr><td style='font-weight: bold;'>Result</td><td>x$item[camt]</td></tr>";
         $iString.="</table>";
@@ -186,7 +182,7 @@ function monster($monster) {
     if(!empty($monster['img'])) {
         $mString.="<img src=\"$monster[img]\" alt=\"$monstername]\" class='item_image'/>\n";
     }
-    $mString.="<p>".nl2br($monster['notes'])."</p>\n";
+    $mString.="<p>".preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",nl2br($monster['notes']))."</p>\n";
     $sql=$db->query("SELECT name, value FROM monster_stats WHERE mid=$monster[monsterid]");
     if($sql->num_rows>0) {
         $mString.="<table id='monster_stats'><tr><th colspan='2'>Stats</th></tr>\n";
@@ -197,5 +193,11 @@ function monster($monster) {
     }
     $mString.="</div>\n</div>\n";
 
+}
+
+function cleanString($string) {
+    $tmp=str_replace("'",'',$string);
+    $tmp=str_replace(" ",'',$tmp);
+    return $tmp;
 }
 ?>
