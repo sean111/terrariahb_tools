@@ -91,7 +91,7 @@ foreach(glob('NPCs/*.html') as $filename) {
     $nString.="<div id='$sname' data-role='page'>";
     $nString.="<div data-role='header'><h1>$name</h1></div>";
     $nString.="<div data-role='content'>";
-    $nString.=file_get_contents($filename);
+    $nString.=preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",file_get_contents($filename));
     $nString.="</div></div>";
 }
 
