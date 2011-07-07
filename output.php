@@ -197,6 +197,7 @@ function monster($monster) {
 
 function cleanString($string) {
     $tmp=str_replace("'",'',$string);
+    $tmp=str_replace("`",'',$tmp);
     $tmp=str_replace(" ",'',$tmp);
     return $tmp;
 }
