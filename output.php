@@ -28,7 +28,7 @@ while($item=$sql->fetch_array()) {
 	$item['nlink']=cleanString($item['name']);
     $iListString.="<li><a href=\"#$item[nlink]\">";
     if(!empty($item['img'])) {
-        $iListString.="<img src=\"$item[img]\" alt=\"$item[name]\" width='20' height='20' class='ui-li-icon' />";
+        $iListString.="<img name=\"$item[img]\" alt=\"$item[name]\" width='20' height='20' class='ui-li-icon' />";
     }
     
     $iListString.="$item[name]</a></li>\n";
@@ -57,7 +57,7 @@ while($monster=$sql->fetch_array()) {
 	$monster['nlink']=cleanString($monster['name']);
     $mListString.="<li><a href=\"#$monster[nlink]\">";
     if(!empty($monster['img'])) {
-        $mListString.="<img src=\"$monster[img]\" alt=\"$monster[name]\" width='20' height='20' class='ui-li-icon' />";
+        $mListString.="<img name=\"$monster[img]\" alt=\"$monster[name]\" width='20' height='20' class='ui-li-icon' />";
     }
     
     $mListString.="$monster[name]</a></li>\n";
@@ -125,7 +125,7 @@ function item($item) {
     $iString.="<div data-role='header'><h1>$item[name]</h1></div>\n";
     $iString.="<div data-role='content'>\n";
     if($item['img']) {
-        $iString.="<img src=\"$item[img]\" alt=\"$item[name]\" class='item_image'/>\n";
+        $iString.="<img name=\"$item[img]\" alt=\"$item[name]\" class='item_image'/>\n";
     }
         $iString.="<p>$item[notes]</p>\n";
         $sql=$db->query("SELECT name, value FROM item_stats WHERE itemid=$item[itemid]");
@@ -180,7 +180,7 @@ function monster($monster) {
     $mString.="<div data-role='header'><h1>$monster[name]</h1></div>\n";
     $mString.="<div data-role='content'>\n";
     if(!empty($monster['img'])) {
-        $mString.="<img src=\"$monster[img]\" alt=\"$monstername]\" class='item_image'/>\n";
+        $mString.="<img name=\"$monster[img]\" alt=\"$monstername]\" class='item_image'/>\n";
     }
     $mString.="<p>".preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",nl2br($monster['notes']))."</p>\n";
     $sql=$db->query("SELECT name, value FROM monster_stats WHERE mid=$monster[monsterid]");
