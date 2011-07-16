@@ -153,7 +153,7 @@ function item($item) {
             $isql=$db->query($isql);
             $ctool=$isql->fetch_array();
             if($ctool['img']) {
-                $iString.="<img src=\"$ctool[img]\" alt=\"$item[ctool]\" />";
+                $iString.="<img name=\"$ctool[img]\" alt=\"$item[ctool]\" />";
             }
             $iString.="$item[ctool]";
         }
@@ -163,7 +163,7 @@ function item($item) {
         while($ing=$sql->fetch_array()) {
             $iString.="<tr><td>";
             if(!empty($ing['img'])) {
-                $iString.="<img src=\"$ing[img]\" alt=\"$ing[name]\" />";
+                $iString.="<img name=\"$ing[img]\" alt=\"$ing[name]\" />";
             }
             $iString.="&nbsp;&nbsp;<div class='link'><a href='#".cleanString($ing['name'])."'>$ing[name]</a></div></td><td>$ing[amt]</td></tr>";
         }
