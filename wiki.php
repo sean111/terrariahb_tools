@@ -86,7 +86,8 @@ while($item=$sql->fetch_array()) {
 		$db->query("DELETE FROM item_ingredients WHERE itemid=$item[id]");
 	}
 	for($x=0;$x<sizeof($ingredients);$x++) {
-		$i=$ingredients[$x];
+        $i=$ingredients[$x];
+        $i['item']=str_replace("'","\'",$i['item']);
 		$db->query("INSERT INTO item_ingredients (itemid, name, amt) VALUES ($item[id],'$i[item]','$i[amount]')");
 	}
 	print "Data for [ITEM] $item[name] created\n";

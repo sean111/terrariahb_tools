@@ -26,7 +26,7 @@ while($item=$sql->fetch_array()) {
         $cCat=$item['cat'];
     }
 	$item['nlink']=cleanString($item['name']);
-    $iListString.="<li><a href=\"#$item[nlink]\">";
+    $iListString.="<li class='object' name=\"$item[nlink]\"><a href=\"#$item[nlink]\">";
     if(!empty($item['img'])) {
         $iListString.="<img name=\"$item[img]\" alt=\"$item[name]\" width='20' height='20' class='ui-li-icon' />";
     }
@@ -55,7 +55,7 @@ while($monster=$sql->fetch_array()) {
         $cCat=$monster['cat'];
     }
 	$monster['nlink']=cleanString($monster['name']);
-    $mListString.="<li><a href=\"#$monster[nlink]\">";
+    $mListString.="<li class='object' name=\"$monster[nlink]\"><a href=\"#$monster[nlink]\">";
     if(!empty($monster['img'])) {
         $mListString.="<img name=\"$monster[img]\" alt=\"$monster[name]\" width='20' height='20' class='ui-li-icon' />";
     }
@@ -72,7 +72,7 @@ foreach(glob('Enviroments/*.html') as $filename) {
     $name=str_replace('.html','',$filename);
     $name=str_replace('Enviroments/','',$name);
     $sname=str_replace(' ','',$name);
-    $eCatString.="<li><a href=\"#$sname\">$name</a></li>";
+    $eCatString.="<li class='object' name=\"$sname\"><a href=\"#$sname\">$name</a></li>";
     $eString.="<div id='$sname' data-role='page'>";
     $eString.="<div data-role='header'><h1>$name</h1></div>";
     $eString.="<div data-role='content'>";
@@ -87,7 +87,7 @@ foreach(glob('NPCs/*.html') as $filename) {
     $name=str_replace('.html','',$filename);
     $name=str_replace('NPCs/','',$name);
     $sname=str_replace(' ','',$name);
-    $nCatString.="<li><a href=\"#$sname\">$name</a></li>";
+    $nCatString.="<li class='object' name=\"$sname\"><a href=\"#$sname\">$name</a></li>";
     $nString.="<div id='$sname' data-role='page'>";
     $nString.="<div data-role='header'><h1>$name</h1></div>";
     $nString.="<div data-role='content'>";
