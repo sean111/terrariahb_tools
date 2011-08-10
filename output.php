@@ -168,8 +168,15 @@ function item($item) {
             $iString.="&nbsp;&nbsp;<div class='link'><a href='#".cleanString($ing['name'])."'>$ing[name]</a></div></td><td>$ing[amt]</td></tr>";
         }
         $iString.="<tr><td style='font-weight: bold;'>Result</td><td>x$item[camt]</td></tr>";
-        $iString.="</table>";
-    }
+        $iString.="</table>";        
+    } 
+    $sql=$db->query("SELECT DISTINCT i.name FROM item_ingredients ii INNER JOIN items i ON ii.itemid=i.id WHERE ii.name='".str_replace("'","\'",$item[name])."'");        
+    if($sql->num_rows>0) {
+        $iString.="<h3>Used in</h3>";
+        while($ing=$sql->fetch_array()) {        
+            $iString.="$ing[name]</br>";            
+        }
+    }    
     $iString.="</div>\n</div>\n";
 }
 
