@@ -4,7 +4,6 @@ $start=microtime(true);
 $db=new mysqli($dbHost,$dbUser,$dbPass,$dbName);
 $template=$templateFile;
 $outFile=$outputFile;
-
 //ITEMS
 $sql="SELECT c.name as cat, c.order, i.name, i.img, i.id as itemid, i.notes, i.ctool, i.camt FROM item_cats c LEFT OUTER JOIN items i ON c.id=i.cat ORDER BY `order`, i.id";
 $sql=$db->query($sql);
@@ -76,7 +75,8 @@ foreach(glob('Enviroments/*.html') as $filename) {
     $eString.="<div id='$sname' data-role='page'>";
     $eString.="<div data-role='header'><h1>$name</h1></div>";
     $eString.="<div data-role='content'>";
-    $eString.=preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",file_get_contents($filename));
+    //$eString.=preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",file_get_contents($filename));
+    $eString.=linkItems(file_get_contents($filename));
     $eString.="</div></div>";
 }
 
@@ -91,7 +91,8 @@ foreach(glob('NPCs/*.html') as $filename) {
     $nString.="<div id='$sname' data-role='page'>";
     $nString.="<div data-role='header'><h1>$name</h1></div>";
     $nString.="<div data-role='content'>";
-    $nString.=preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",file_get_contents($filename));
+    //$nString.=preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",file_get_contents($filename));
+    $nString.=linkItems(file_get_contents($filename));
     $nString.="</div></div>";
 }
 
@@ -127,7 +128,7 @@ function item($item) {
     if($item['img']) {
         $iString.="<img name=\"$item[img]\" alt=\"$item[name]\" class='item_image'/>\n";
     }
-        $iString.="<p>$item[notes]</p>\n";
+        $iString.="<p>".linkItems($item['notes'])."</p>\n";
         $sql=$db->query("SELECT name, value FROM item_stats WHERE itemid=$item[itemid]");
         if($sql->num_rows>0) {
             $iString.="<table id='item_stats'><tr><th colspan='2'>Tool Stats</th></tr>\n";
@@ -141,7 +142,7 @@ function item($item) {
     $sql="SELECT ii.name, ii.amt, i.img FROM item_ingredients ii LEFT OUTER JOIN items i ON ii.name=i.name WHERE itemid=$item[itemid]";
     $sql=$db->query($sql);
     if($sql->num_rows>0) {
-        $iString.="<br /><table id='item_ingredients'>";
+        $iString.="<br /><table id='item_ingredients' class='object_table'>";
         $iString.="<tr><th colspan='2'>Crafting</th></tr>";
         $iString.="<tr><th colspan='2'>Tool</th></tr>";
         $iString.="<tr style='text-align:center;'><td colspan='2'>";
@@ -165,17 +166,19 @@ function item($item) {
             if(!empty($ing['img'])) {
                 $iString.="<img name=\"$ing[img]\" alt=\"$ing[name]\" />";
             }
-            $iString.="&nbsp;&nbsp;<div class='link'><a href='#".cleanString($ing['name'])."'>$ing[name]</a></div></td><td>$ing[amt]</td></tr>";
+            $iString.="&nbsp;&nbsp;<span class='link'><a href='#".cleanString($ing['name'])."'>$ing[name]</a></span></td><td>$ing[amt]</td></tr>";
         }
         $iString.="<tr><td style='font-weight: bold;'>Result</td><td>x$item[camt]</td></tr>";
         $iString.="</table>";        
     } 
     $sql=$db->query("SELECT DISTINCT i.name FROM item_ingredients ii INNER JOIN items i ON ii.itemid=i.id WHERE ii.name='".str_replace("'","\'",$item[name])."'");        
     if($sql->num_rows>0) {
-        $iString.="<h3>Used in</h3>";
+        $iString.="<br /><table class='object_table'>";
+        $iString.="<tr><th>Used in</th></tr>";
         while($ing=$sql->fetch_array()) {        
-            $iString.="$ing[name]</br>";            
+            $iString.="<tr><td><span class='link'><a href='#".cleanString($ing['name'])."'>$ing[name]</a></td></tr>";            
         }
+        $iString.="</table>";
     }    
     $iString.="</div>\n</div>\n";
 }
@@ -189,7 +192,8 @@ function monster($monster) {
     if(!empty($monster['img'])) {
         $mString.="<img name=\"$monster[img]\" alt=\"$monstername]\" class='item_image'/>\n";
     }
-    $mString.="<p>".preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",nl2br($monster['notes']))."</p>\n";
+    //$mString.="<p>".preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",nl2br($monster['notes']))."</p>\n";
+    $mString.="<p>".linkItems(nl2br($monster['notes']))."</p>";
     $sql=$db->query("SELECT name, value FROM monster_stats WHERE mid=$monster[monsterid]");
     if($sql->num_rows>0) {
         $mString.="<table id='monster_stats'><tr><th colspan='2'>Stats</th></tr>\n";
@@ -207,5 +211,10 @@ function cleanString($string) {
     $tmp=str_replace("`",'',$tmp);
     $tmp=str_replace(" ",'',$tmp);
     return $tmp;
+}
+
+function linkItems($string) {
+    $string=preg_replace('/\[\[(.+)\]\]/e',"'<span class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></span>'",$string);
+    return $string;
 }
 ?>
