@@ -17,7 +17,7 @@
         <apply executable="optipng" osfamily="unix">
             <arg value="-quiet"/>
             <arg value="-o7"/>
-            <fileset dir="/srv/www/droid/terrariahb/img/">
+            <fileset dir="/srv/www/projects/droid/terrariahb/img/">
                 <include name="**/*.png"/>
             </fileset>
         </apply>

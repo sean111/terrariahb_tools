@@ -2,7 +2,7 @@
 require_once '../config.php';
 require_once 'phpQuery.php';
 
-$baseDir='/srv/www/droid/thb/';
+$baseDir='/srv/www/projects/droid/thb/';
 $templateFile='template.html';
 $indexFile='index.html';
 $imageDir='img/';
@@ -58,7 +58,7 @@ while($mmenu=$sql->fetch_array()) {
             }
             $img=getImage($obj['name']);
 
-            $src="<li><a href='#$link'>";
+            $src="<li class='object' name='$link'><a href='#$link'>";
             if(!empty($img)) {
                 $src.="<img name=\"$img\" alt=\"$obj[name]\" width='20' height='20' class='ui-li-icon' />";
             }
@@ -132,21 +132,30 @@ function cleanString($string) {
  * @param string $name The name of the object
  **/ 
 function getImage($name) {
+    //TODO: Use regex instead of explode
     global $imageDir, $baseDir;
-    $name=str_replace(" ", "_", $name);
-    $imgFile=$imageDir.$name;
-    //print "Looking for $imgFile\n";
-    if(file_exists($baseDir.$imgFile.".png")) {
-        return $imgFile.".png";
+    $name=str_replace(" ", "_", $name);    
+    $dir=$baseDir.$imageDir."/";
+    $files=glob($dir."*");
+    foreach($files as $file) {
+        $tmp=explode(".",$file);
+        $tmp=str_replace($dir,null,$tmp[0]);
+        if(strtolower(str_replace("'","",$name))==strtolower(str_replace("'","",$tmp))) {                        
+            $file=str_replace($dir, $imageDir, $file);
+            return $file;
+        }    
     }
-    else if(file_exists($baseDir.$imgFile.".gif")) {
-        return $imgFile.".gif";
-    }
-    else {
-        return null;
-    }
+    return false;
 }
 
+/**
+ * Loads the page and parses the data for a supplied object
+ *
+ * This function will load the wiki page for the obkect than parse it using phpQuery to modify
+ * the data to fit into the application and update images/links
+ *
+ * @param string Name of the object
+ **/
 function loadObject($name) {
     global $cp, $objectSource, $objects;    
     $wname=str_replace(" ", "_", $name);
@@ -160,6 +169,8 @@ function loadObject($name) {
     pq('div.plainlinks')->remove();
     pq('script')->remove();
     pq('#toc')->remove();
+    pq('.infobox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em;');
+    pq('.craftbox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
     foreach(pq('a') as $link) {
         $title=pq($link)->attr('title');
         if(in_array($title, $objects)) {
@@ -171,15 +182,15 @@ function loadObject($name) {
         }
     }
     foreach(pq('img') as $img) {
-        $alt=pq($img)->attr('alt');
+        $iSrc=pq($img)->attr('src');
         //$alt=str_replace(" ","_", $alt);        
         if(substr($alt,0,4)!="img/") {
+            $info=pathinfo($iSrc);
+            $iSrc=basename($iSrc,'.'.$info['extension']);
             //print substr($alt,0,4)."\n";
-            $alt=str_replace("-tiles","",$alt);
-            $alt=str_replace(".png", '', $alt);
-            $alt=str_replace(".gif", '', $alt);
+            $iSrc=str_replace("-tiles","",$iSrc);
             //print "Looking for: $alt\n";
-            $imgSrc=getImage($alt);
+            $imgSrc=getImage($iSrc);
             if(!empty($img)) {
                 pq($img)->attr('name',$imgSrc);
             }
