@@ -2,7 +2,7 @@
 require_once '../config.php';
 require_once 'phpQuery.php';
 
-$baseDir='/srv/www/projects/droid/thb/';
+$baseDir='/Users/sean/Projects/thbex/';
 $templateFile='template.html';
 $indexFile='index.html';
 $imageDir='img/';
@@ -171,6 +171,12 @@ function loadObject($name) {
     pq('#toc')->remove();
     pq('.infobox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em;');
     pq('.craftbox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
+    foreach(pq('table') as $table) {
+        if(pq($table)->attr('class')==null) {
+            pq($table)->attr('style','width: 100%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; word-wrap: break-word;');
+        }    
+        //table-layout: fixed; word-wrap: break-word;
+    }
     foreach(pq('a') as $link) {
         $title=pq($link)->attr('title');
         if(in_array($title, $objects)) {
