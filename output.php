@@ -1,11 +1,6 @@
 <?php
-require_once '../config.php';
+require_once 'config.php';
 require_once 'phpQuery.php';
-
-$baseDir='/Users/sean/Projects/thbex/';
-$templateFile='template.html';
-$indexFile='index.html';
-$imageDir='img/';
 
 //Curl Init
 $cp=curl_init();
