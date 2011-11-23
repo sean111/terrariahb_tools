@@ -1,211 +1,121 @@
 <?php
-include 'config.php';
-$start=microtime(true);
-$db=new mysqli($dbHost,$dbUser,$dbPass,$dbName);
-$template=$templateFile;
-$outFile=$outputFile;
-//ITEMS
-$sql="SELECT c.name as cat, c.order, i.name, i.img, i.id as itemid, i.notes, i.ctool, i.camt FROM item_cats c LEFT OUTER JOIN items i ON c.id=i.cat ORDER BY `order`, i.id";
-$sql=$db->query($sql);
+require_once '../config.php';
+require_once 'phpQuery.php';
 
-$cCat=null;
-$iListString="";
-$iString="";
-$catString="";
-while($item=$sql->fetch_array()) {
-    if($item['cat']!=$cCat) {
-        //New Cat
-        if($cCat!=null) {
-            $iListString.="</ul>\n</div>\n</div>\n";
-        }
-        $tc=strtolower($item['cat']);
-        $tc=str_replace(" ","_",$tc);
-        $catString.="<li><a href=\"#$tc\">$item[cat]</a></li>\n";
-        $iListString.="<div id='$tc' data-role='page'>\n<div data-role='header'><h1>$item[cat]</h1></div>\n<div data-role='content'>\n<ul data-role='listview' data-inset='false' data-filter='true'>\n";
-        $cCat=$item['cat'];
-    }
-	$item['nlink']=cleanString($item['name']);
-    $iListString.="<li class='object' name=\"$item[nlink]\"><a href=\"#$item[nlink]\">";
-    if(!empty($item['img'])) {
-        $iListString.="<img name=\"$item[img]\" alt=\"$item[name]\" width='20' height='20' class='ui-li-icon' />";
-    }
-    
-    $iListString.="$item[name]</a></li>\n";
-    item($item);
-}
-$iListString.="</ul>\n</div>\n</div>\n"; //Closes out the last cat
+$baseDir='/Users/sean/Projects/thbex/';
+$templateFile='template.html';
+$indexFile='index.html';
+$imageDir='img/';
 
-//MONSTERS
-$sql="SELECT c.name as cat, m.name, m.img, m.id as monsterid, m.notes FROM `monster_cats` c INNER JOIN monsters m ON c.id=m.catid";
-$sql=$db->query($sql);
-$cCat=null;
-$mListString="";
-$mString="";
-$mcatString="";
-while($monster=$sql->fetch_array()) {
-    if($monster['cat']!=$cCat) {
-        if($cCat!=null) {
-            $mListString.="</ul>\n</div>\n</div>\n";            
-        }
-        $tc=strtolower($monster['cat']);
-        $tc=str_replace(" ","_",$tc);
-        $mCatString.="<li><a href=\"#$tc\">$monster[cat]</a></li>\n";
-        $mListString.="<div id='$tc' data-role='page'>\n<div data-role='header'><h1>$monster[cat]</h1></div>\n<div data-role='content'>\n<ul data-role='listview' data-inset='false' data-filter='true'>\n";
-        $cCat=$monster['cat'];
-    }
-	$monster['nlink']=cleanString($monster['name']);
-    $mListString.="<li class='object' name=\"$monster[nlink]\"><a href=\"#$monster[nlink]\">";
-    if(!empty($monster['img'])) {
-        $mListString.="<img name=\"$monster[img]\" alt=\"$monster[name]\" width='20' height='20' class='ui-li-icon' />";
-    }
-    
-    $mListString.="$monster[name]</a></li>\n";
-    monster($monster);
-}
-$mListString.="</ul>\n</div>\n</div>\n";
+//Curl Init
+$cp=curl_init();
+$header=array(
+    "Content-Type: text/html; charset\"utf-8\"",
+    "Accept-Charset: utf-8"  
+);
+curl_setopt($cp, CURLOPT_HTTPHEADER, $header);
+curl_setopt($cp, CURLOPT_HEADER, 0);
+curl_setopt($cp, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($cp, CURLOPT_ENCODING,'gzip');
 
-//ENVIROMENTS
-$eCatString="";
-$eString="";
-foreach(glob('Enviroments/*.html') as $filename) {
-    $name=str_replace('.html','',$filename);
-    $name=str_replace('Enviroments/','',$name);
-    $sname=str_replace(' ','',$name);
-    $eCatString.="<li class='object' name=\"$sname\"><a href=\"#$sname\">$name</a></li>";
-    $eString.="<div id='$sname' data-role='page'>";
-    $eString.="<div data-role='header'><h1>$name</h1></div>";
-    $eString.="<div data-role='content'>";
-    //$eString.=preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",file_get_contents($filename));
-    $eString.=linkItems(file_get_contents($filename));
-    $eString.="</div></div>";
+$db=new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+
+$objects=array();
+$sql=$db->query('SELECT name FROM objects');
+while($tmp=$sql->fetch_array()) {
+    $objects[]=$tmp['name'];
 }
 
-//NPCs
-$nCatString="";
-$nString="";
-foreach(glob('NPCs/*.html') as $filename) {
-    $name=str_replace('.html','',$filename);
-    $name=str_replace('NPCs/','',$name);
-    $sname=str_replace(' ','',$name);
-    $nCatString.="<li class='object' name=\"$sname\"><a href=\"#$sname\">$name</a></li>";
-    $nString.="<div id='$sname' data-role='page'>";
-    $nString.="<div data-role='header'><h1>$name</h1></div>";
-    $nString.="<div data-role='content'>";
-    //$nString.=preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",file_get_contents($filename));
-    $nString.=linkItems(file_get_contents($filename));
-    $nString.="</div></div>";
-}
+$sql=$db->query("SELECT id, name, link FROM menu ORDER BY `order`");
+$mmSource='';
+$cSource='';
+$objectSource='';
+$loadedObjects=array();
 
-$htmlData=file_get_contents($template);
-
-$vnData=file_get_contents('version_notes.html');
-//$vnData=nl2br($vnData);
-
-$htmlData=str_replace("{VERSIONNOTES}",$vnData,$htmlData);
-$htmlData=str_replace("{CATLIST}",$catString,$htmlData);
-$htmlData=str_replace("{ITEMLIST}",$iListString,$htmlData);
-$htmlData=str_replace("{ITEMS}",$iString,$htmlData);
-$htmlData=str_replace("{MCATLIST}",$mCatString,$htmlData);
-$htmlData=str_replace("{MONSTERLIST}",$mListString,$htmlData);
-$htmlData=str_replace("{MONSTERS}",$mString,$htmlData);
-$htmlData=str_replace("{ECATLIST}",$eCatString,$htmlData);
-$htmlData=str_replace("{ENVS}",$eString,$htmlData);
-$htmlData=str_replace("{NPCLIST}",$nCatString,$htmlData);
-$htmlData=str_replace("{NPCS}",$nString,$htmlData);
-
-file_put_contents($outFile,$htmlData);
-
-$ttime=microtime(true)-$start;
-
-print "Output generated in ".round($ttime,4)."  seconds\n";
-
-function item($item) {
-    global $iString;
-    global $db;    
-    $iString.="<div id=\"$item[nlink]\" data-role='page'>\n";
-    $iString.="<div data-role='header'><h1>$item[name]</h1></div>\n";
-    $iString.="<div data-role='content'>\n";
-    if($item['img']) {
-        $iString.="<img name=\"$item[img]\" alt=\"$item[name]\" class='item_image'/>\n";
+while($mmenu=$sql->fetch_array()) {
+    $stuff=array();
+    if(!empty($mmenu['link'])) {
+        $link=$mmenu['link'];
+        $isLinked=true;
     }
-        $iString.="<p>".linkItems($item['notes'])."</p>\n";
-        $sql=$db->query("SELECT name, value FROM item_stats WHERE itemid=$item[itemid]");
-        if($sql->num_rows>0) {
-            $iString.="<table id='item_stats'><tr><th colspan='2'>Tool Stats</th></tr>\n";
-            while($stats=$sql->fetch_array()) {
-                $value=str_replace(array('{{cc','{{sc','{{gc'), array(' Copper Coin(s)',' Silver Coin(s)',' Gold Coin(s)'), $stats['value']);
-                $iString.="<tr><td style='font-weight: bold;'>$stats[name]</td><td>$value</td></tr>\n";
+    else {
+        $link=cleanString($mmenu['name']);
+        $isLinked=false;
+    }
+    print "Menu Item: $mmenu[name]\n";
+    $mmSource.="<li><a href='#$link'>$mmenu[name]</a></li>";
+    if(!$isLinked) {  
+        $oSql="SELECT o.name, link, c.name as cat FROM objects o LEFT OUTER JOIN cats c ON o.cid=c.id WHERE o.mid=$mmenu[id] ORDER BY c.`order`, c.id, o.name";
+        //print $oSql."\n";
+        $oSql=$db->query($oSql);        
+        while($obj=$oSql->fetch_array()) {
+            print "\t$obj[name]\n";
+            if(!empty($obj['link'])) {
+                $link=$obj['link'];
             }
-            $iString.="</table>\n";
-        }
+            else {
+                $link=cleanString($obj['name']);
+            }
+            $img=getImage($obj['name']);
 
-    $sql="SELECT ii.name, ii.amt, i.img FROM item_ingredients ii LEFT OUTER JOIN items i ON ii.name=i.name WHERE itemid=$item[itemid]";
-    $sql=$db->query($sql);
-    if($sql->num_rows>0) {
-        $iString.="<br /><table id='item_ingredients' class='object_table'>";
-        $iString.="<tr><th colspan='2'>Crafting</th></tr>";
-        $iString.="<tr><th colspan='2'>Tool</th></tr>";
-        $iString.="<tr style='text-align:center;'><td colspan='2'>";
-        if(empty($item['ctool'])) {
-            $iString.='Hand';
-        }
-        else {
-            $isql="SELECT img FROM items WHERE name='$item[ctool]'";
-            $isql=$db->query($isql);
-            $ctool=$isql->fetch_array();
-            if($ctool['img']) {
-                $iString.="<img name=\"$ctool[img]\" alt=\"$item[ctool]\" />";
+            $src="<li class='object' name='$link'><a href='#$link'>";
+            if(!empty($img)) {
+                $src.="<img name=\"$img\" alt=\"$obj[name]\" width='20' height='20' class='ui-li-icon' />";
             }
-            $iString.="$item[ctool]";
-        }
-        $iString.='</td></tr>';
-        $istring.="<tr><th colspan='2'>Ingredients</th></tr>";
-        $iString.="<tr><th>Item</th><th>Amount</th></tr>";
-        while($ing=$sql->fetch_array()) {
-            $iString.="<tr><td>";
-            if(!empty($ing['img'])) {
-                $iString.="<img name=\"$ing[img]\" alt=\"$ing[name]\" />";
+            $src.=$obj['name']."</a></li>\n";
+            if($obj['cat']) {                
+                $stuff[$obj['cat']][]=$src;
             }
-            $iString.="&nbsp;&nbsp;<span class='link'><a href='#".cleanString($ing['name'])."'>$ing[name]</a></span></td><td>$ing[amt]</td></tr>";
+            else {
+                $stuff[]=$src;
+            }
+            //Get Object Data Here
+            if(!in_array($obj['name'], $loadedObjects)) {
+                loadObject($obj['name']);
+                $loadedObjects[]=$obj['name'];
+            }            
         }
-        $iString.="<tr><td style='font-weight: bold;'>Result</td><td>x$item[camt]</td></tr>";
-        $iString.="</table>";        
-    } 
-    $sql=$db->query("SELECT DISTINCT i.name FROM item_ingredients ii INNER JOIN items i ON ii.itemid=i.id WHERE ii.name='".str_replace("'","\'",$item[name])."'");        
-    if($sql->num_rows>0) {
-        $iString.="<br /><table class='object_table'>";
-        $iString.="<tr><th>Used in</th></tr>";
-        while($ing=$sql->fetch_array()) {        
-            $iString.="<tr><td><span class='link'><a href='#".cleanString($ing['name'])."'>$ing[name]</a></td></tr>";            
+        $tSrc=null;
+        $cSource.="<div id='".cleanString($mmenu['name'])."' data-role='page'>\n";
+        $cSource.="<div data-role='header'><h1>$mmenu[name]</h1></div>\n";
+        $cSource.="<div data-role='content'>\n";
+        $cSource.="<ul data-role='listview' data-inset='true'>\n";
+        foreach($stuff as $key => $val) {            
+            if(is_array($val)) {
+                $cSource.="<li><a href='#".cleanString($key)."'>$key</a></li>\n";                
+                $tSrc.="<div id='".cleanString($key)."' data-role='page'>\n";
+                $tSrc.="<div data-role='header'><h1>$key</h1></div>\n";
+                $tSrc.="<div data-role='content'>\n";
+                $tSrc.="<ul data-role='listview' data-inset='true'>\n";
+                foreach($val as $vObj) {
+                    $tSrc.=$vObj;
+                }
+                $tSrc.="</ul>\n</div>\n</div>\n";
+            }                        
+            else {
+                $cSource.=$val;
+            }
         }
-        $iString.="</table>";
-    }    
-    $iString.="</div>\n</div>\n";
+        $cSource.="</ul>\n</div>\n</div>\n";
+        if($tSrc) {
+            $cSource.=$tSrc;
+        }     
+    }
 }
 
-function monster($monster) {
-    global $mString;
-    global $db;
-    $mString.="<div id=\"$monster[nlink]\" data-role='page'>\n";
-    $mString.="<div data-role='header'><h1>$monster[name]</h1></div>\n";
-    $mString.="<div data-role='content'>\n";
-    if(!empty($monster['img'])) {
-        $mString.="<img name=\"$monster[img]\" alt=\"$monstername]\" class='item_image'/>\n";
-    }
-    //$mString.="<p>".preg_replace('/\[\[(.+)\]\]/e',"'<div class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></div>'",nl2br($monster['notes']))."</p>\n";
-    $mString.="<p>".linkItems(nl2br($monster['notes']))."</p>";
-    $sql=$db->query("SELECT name, value FROM monster_stats WHERE mid=$monster[monsterid]");
-    if($sql->num_rows>0) {
-        $mString.="<table id='monster_stats'><tr><th colspan='2'>Stats</th></tr>\n";
-        while($stats=$sql->fetch_array()) {
-            $mString.="<tr><td style='font-weight: bold;'>$stats[name]</td><td>$stats[value]</td></tr>";
-        }
-        $mString.="</table>";
-    }
-    $mString.="</div>\n</div>\n";
+$tfdata=file_get_contents($baseDir.$templateFile);
+$tfdata=str_replace("{MAINMENU}", $mmSource, $tfdata);
+$tfdata=str_replace("{CATS}", $cSource, $tfdata);
+$tfdata=str_replace("{OBJECTS}", $objectSource, $tfdata);
+file_put_contents($baseDir.$indexFile, $tfdata);
 
-}
-
+/**
+ * Cleans out certain characters from a string
+ *
+ * This function is used when cleaning up special characters I don't want in fields like "id".
+ *
+ * @param string $string the The target string to clean up
+ **/
 function cleanString($string) {
     $tmp=str_replace("'",'',$string);
     $tmp=str_replace("`",'',$tmp);
@@ -213,8 +123,93 @@ function cleanString($string) {
     return $tmp;
 }
 
-function linkItems($string) {
-    $string=preg_replace('/\[\[(.+)\]\]/e',"'<span class=\'link\'><a href=#'.cleanString('\\1').'>\\1</a></span>'",$string);
-    return $string;
+/**
+ * Checks the img directory for the correct image
+ *
+ * This will check the imageDir directory for png and gif images for the given name.
+ * Spaces are also replaced with "_" to keep up the names from the wiki.
+ *
+ * @param string $name The name of the object
+ **/ 
+function getImage($name) {
+    //TODO: Use regex instead of explode
+    global $imageDir, $baseDir;
+    $name=str_replace(" ", "_", $name);    
+    $dir=$baseDir.$imageDir."/";
+    $files=glob($dir."*");
+    foreach($files as $file) {
+        $tmp=explode(".",$file);
+        $tmp=str_replace($dir,null,$tmp[0]);
+        if(strtolower(str_replace("'","",$name))==strtolower(str_replace("'","",$tmp))) {                        
+            $file=str_replace($dir, $imageDir, $file);
+            return $file;
+        }    
+    }
+    return false;
+}
+
+/**
+ * Loads the page and parses the data for a supplied object
+ *
+ * This function will load the wiki page for the obkect than parse it using phpQuery to modify
+ * the data to fit into the application and update images/links
+ *
+ * @param string Name of the object
+ **/
+function loadObject($name) {
+    global $cp, $objectSource, $objects;    
+    $wname=str_replace(" ", "_", $name);
+    $url="http://wiki.terrariaonline.com/$wname?action=render";
+    curl_setopt($cp, CURLOPT_URL, $url);
+    $data=curl_exec($cp);
+    $data=str_replace(array('&nbsp;','&ndash;'),array(' ','-'),$data);
+    $doc=phpQuery::newDocument($data);
+    pq('.editsection')->remove();
+    pq('div.gallerybox')->remove();
+    pq('div.plainlinks')->remove();
+    pq('script')->remove();
+    pq('#toc')->remove();
+    pq('.infobox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em;');
+    pq('.craftbox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
+    foreach(pq('table') as $table) {
+        if(pq($table)->attr('class')==null) {
+            pq($table)->attr('style','width: 100%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; word-wrap: break-word;');
+        }    
+        //table-layout: fixed; word-wrap: break-word;
+    }
+    foreach(pq('a') as $link) {
+        $title=pq($link)->attr('title');
+        if(in_array($title, $objects)) {
+            pq($link)->attr('href','#'.cleanString($title));
+            pq($link)->wrap("<span class='link' />");
+        }
+        else {
+            pq($link)->removeAttr('href');
+        }
+    }
+    foreach(pq('img') as $img) {
+        $iSrc=pq($img)->attr('src');
+        //$alt=str_replace(" ","_", $alt);        
+        if(substr($alt,0,4)!="img/") {
+            $info=pathinfo($iSrc);
+            $iSrc=basename($iSrc,'.'.$info['extension']);
+            //print substr($alt,0,4)."\n";
+            $iSrc=str_replace("-tiles","",$iSrc);
+            //print "Looking for: $alt\n";
+            $imgSrc=getImage($iSrc);
+            if(!empty($img)) {
+                pq($img)->attr('name',$imgSrc);
+            }
+            //pq($img)->attr('src','img/'.$alt);
+            pq($img)->removeAttr('src');        
+        }
+    }
+    $doc=preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $doc);
+    $objectSource.="<div id='".cleanString($name)."' data-role='page'>\n";
+    $objectSource.="<div data-role='header'><h1>$name</h1></div>\n";
+    $objectSource.="<div data-role='content'>\n";
+    $objectSource.=$doc;
+    $objectSource.="</div>\n</div>\n";
+    unset($doc, $data);
 }
 ?>
