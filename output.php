@@ -166,6 +166,8 @@ function loadObject($name) {
     pq('div.plainlinks')->remove();
     pq('script')->remove();
     pq('#toc')->remove();
+    pq('.thumbimage')->remove();
+    pq('.internal')->remove();
     pq('.infobox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em;');
     pq('.craftbox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
     foreach(pq('table') as $table) {
@@ -174,6 +176,7 @@ function loadObject($name) {
         }*/       
         foreach(pq($table)->find('table') as $subTable) {
             pq($subTable)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
+            pq($subTable)->attr('align','center');
             pq($subTable)->insertAfter(pq($table));
         }
         //table-layout: fixed; word-wrap: break-word;        
