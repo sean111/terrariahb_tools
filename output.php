@@ -44,7 +44,7 @@ while($mmenu=$sql->fetch_array()) {
         //print $oSql."\n";
         $oSql=$db->query($oSql);        
         while($obj=$oSql->fetch_array()) {
-            print "\t$obj[name]\n";
+            print "\t$obj[name] ";
             if(!empty($obj['link'])) {
                 $link=$obj['link'];
             }
@@ -68,7 +68,8 @@ while($mmenu=$sql->fetch_array()) {
             if(!in_array($obj['name'], $loadedObjects)) {
                 loadObject($obj['name']);
                 $loadedObjects[]=$obj['name'];
-            }            
+            }       
+            print "- done!\n";     
         }
         $tSrc=null;
         $cSource.="<div id='".cleanString($mmenu['name'])."' data-role='page'>\n";
@@ -98,6 +99,7 @@ while($mmenu=$sql->fetch_array()) {
     }
 }
 
+print "Creating $indexFile from $templateFile\n";
 $tfdata=file_get_contents($baseDir.$templateFile);
 $tfdata=str_replace("{MAINMENU}", $mmSource, $tfdata);
 $tfdata=str_replace("{CATS}", $cSource, $tfdata);
@@ -167,12 +169,17 @@ function loadObject($name) {
     pq('.infobox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em;');
     pq('.craftbox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
     foreach(pq('table') as $table) {
-        if(pq($table)->attr('class')==null) {
-            pq($table)->attr('style','width: 100%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; word-wrap: break-word;');
-        }    
-        //table-layout: fixed; word-wrap: break-word;
+        /*if(pq($table)->attr('class')==null) {
+            pq($table)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
+        }*/       
+        foreach(pq($table)->find('table') as $subTable) {
+            pq($subTable)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
+            pq($subTable)->insertAfter(pq($table));
+        }
+        //table-layout: fixed; word-wrap: break-word;        
     }
-    foreach(pq('a') as $link) {
+    //pq('table table')->wrap('<table><tr><td></td></tr></table>');
+    foreach(pq('a') as $link) {    
         $title=pq($link)->attr('title');
         if(in_array($title, $objects)) {
             pq($link)->attr('href','#'.cleanString($title));
