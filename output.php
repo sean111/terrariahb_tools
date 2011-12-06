@@ -99,11 +99,16 @@ while($mmenu=$sql->fetch_array()) {
     }
 }
 
+print "Version Notes\n";
+$versionNotes=file_get_contents('versionNotes.html');
+$versionNotes=nl2br(htmlentities($versionNotes));
+
 print "Creating $indexFile from $templateFile\n";
 $tfdata=file_get_contents($baseDir.$templateFile);
 $tfdata=str_replace("{MAINMENU}", $mmSource, $tfdata);
 $tfdata=str_replace("{CATS}", $cSource, $tfdata);
 $tfdata=str_replace("{OBJECTS}", $objectSource, $tfdata);
+$tfdata=str_replace("{VERSIONNOTES}", $versionNotes, $tfdata);
 file_put_contents($baseDir.$indexFile, $tfdata);
 
 /**
