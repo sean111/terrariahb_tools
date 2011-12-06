@@ -101,7 +101,7 @@ while($mmenu=$sql->fetch_array()) {
 
 print "Version Notes\n";
 $versionNotes=file_get_contents('versionNotes.html');
-$versionNotes=nl2br(htmlentities($versionNotes));
+$versionNotes=nl2br($versionNotes);
 
 print "Creating $indexFile from $templateFile\n";
 $tfdata=file_get_contents($baseDir.$templateFile);
