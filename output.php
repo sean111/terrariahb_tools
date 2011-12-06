@@ -175,8 +175,9 @@ function loadObject($name) {
             pq($table)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
         }*/       
         foreach(pq($table)->find('table') as $subTable) {
-            pq($subTable)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
+            pq($subTable)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px; background: #f9f9f9;');
             pq($subTable)->attr('align','center');
+            pq($subTable)->find('tr')->attr('style', 'padding: 0.2em; background: #E4F0F7; color: #063B5E; text-align: center;');
             pq($subTable)->insertAfter(pq($table));
         }
         //table-layout: fixed; word-wrap: break-word;        
