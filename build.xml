@@ -1,44 +1,29 @@
-<?xml version="1.0"?>
-<project name="TerrariaHB" default="build" basedir="./">
-    <target name="wiki">
-        <echo message="Running wiki parser" />
-        <apply executable="php" osfamily="unix">
-            <filelist dir="./" files="wiki.php" />
-        </apply>
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TerrariaHB Tools" default="all">
+    <property name="output.dir" value="/User/sean/Projects/thbex/" />
+    <target name='all'>
+        <phingcall target="output" />
+        <phingcall target="docs" />
+        <phingcall target="optpng" />
     </target>
     <target name="output">
-        <echo message="Creating output file"/>
-        <apply executable="php" osfamily="unix">
-            <filelist dir="./" files="output.php" />
-        </apply>
+        <exec command="php output.php" passthru="true" />
+    </target>
+    <target name="jsmin">
+        <jsMin targetDir="${output.dir}/js/min/" failonError="true">
+            <fileset dir="${output.dir}/js/">
+                <include name="**/*.js"/>
+            </fileset>
+        </jsMin>
+    </target>
+    <target name="docs">
+        <docblox title="Terraria HB Tools" destdir="docs">
+            <fileset dir=".">
+                <include name="**/*.php" />
+            </fileset>
+        </docblox>
     </target>
     <target name="optpng">
-        <echo message="Optimizing png files"/>
-        <apply executable="optipng" osfamily="unix">
-            <arg value="-quiet"/>
-            <arg value="-o7"/>
-            <fileset dir="/srv/www/projects/droid/terrariahb/img/">
-                <include name="**/*.png"/>
-            </fileset>
-        </apply>
+        <exec command="optipng -quiet -o7 ${output.dir}/img/*.png" passthru="true" />
     </target>
-    <target name="opthtml">
-        <echo message="Optimizing HTML"/>
-        <apply executable="java" dir="/srv/www/droid/terrariahb/">            
-            <filelist dir="/srv/www/droid/terrariahb/" files="index.html"/>
-            <arg value="-jar"/>
-            <arg path="./htmlcompressor-1.1.jar"/>
-            <arg line="--type html"/>
-            <arg line="--remove-quotes"/>
-            <arg line="--compress-js"/>
-            <arg line="--compress-css"/>
-            <arg line="-o index.html"/>           
-        </apply>
-    </target>
-    <target name="build">
-        <antcall target="output"/>
-        <antcall target="optpng"/>
-    </target>
-
 </project>
-                    
