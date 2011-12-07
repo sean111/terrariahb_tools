@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TerrariaHB Tools" default="all">
+    <property name="output.dir" value="/User/sean/Projects/thbex/" />
+    <target name='all'>
+        <phingcall target="output" />
+        <phingcall target="docs" />
+        <phingcall target="optpng" />
+    </target>
+    <target name="output">
+        <exec command="php output.php" passthru="true" />
+    </target>
+    <target name="jsmin">
+        <jsMin targetDir="${output.dir}/js/min/" failonError="true">
+            <fileset dir="${output.dir}/js/">
+                <include name="**/*.js"/>
+            </fileset>
+        </jsMin>
+    </target>
+    <target name="docs">
+        <docblox title="Terraria HB Tools" destdir="docs">
+            <fileset dir=".">
+                <include name="**/*.php" />
+            </fileset>
+        </docblox>
+    </target>
+    <target name="optpng">
+        <exec command="optipng -quiet -o7 ${output.dir}/img/*.png" passthru="true" />
+    </target>
+</project>
