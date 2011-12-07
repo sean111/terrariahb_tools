@@ -24,8 +24,9 @@ while($tmp=$sql->fetch_array()) {
 $sql=$db->query("SELECT id, name, link FROM menu ORDER BY `order`");
 $mmSource='';
 $cSource='';
-$objectSource='';
+//$objectSource='';
 $loadedObjects=array();
+$objTemplate=file_get_contents($baseDir.'objTemplate.html');
 
 while($mmenu=$sql->fetch_array()) {
     $stuff=array();
@@ -53,7 +54,7 @@ while($mmenu=$sql->fetch_array()) {
             }
             $img=getImage($obj['name']);
 
-            $src="<li class='object' name='$link'><a href='#$link'>";
+            $src="<li class='object' name='$link'><a href='$link.html'>";
             if(!empty($img)) {
                 $src.="<img name=\"$img\" alt=\"$obj[name]\" width='20' height='20' class='ui-li-icon' />";
             }
@@ -107,7 +108,7 @@ print "Creating $indexFile from $templateFile\n";
 $tfdata=file_get_contents($baseDir.$templateFile);
 $tfdata=str_replace("{MAINMENU}", $mmSource, $tfdata);
 $tfdata=str_replace("{CATS}", $cSource, $tfdata);
-$tfdata=str_replace("{OBJECTS}", $objectSource, $tfdata);
+//$tfdata=str_replace("{OBJECTS}", $objectSource, $tfdata);
 $tfdata=str_replace("{VERSIONNOTES}", $versionNotes, $tfdata);
 file_put_contents($baseDir.$indexFile, $tfdata);
 
@@ -159,7 +160,8 @@ function getImage($name) {
  * @param string Name of the object
  **/
 function loadObject($name) {
-    global $cp, $objectSource, $objects;    
+    global $cp, $objects, $objTemplate, $baseDir;    
+    $objectSource="";
     $wname=str_replace(" ", "_", $name);
     $url="http://wiki.terrariaonline.com/$wname?action=render";
     curl_setopt($cp, CURLOPT_URL, $url);
@@ -216,11 +218,14 @@ function loadObject($name) {
         }
     }
     $doc=preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $doc);
+    $objData=$objTemplate;
     $objectSource.="<div id='".cleanString($name)."' data-role='page'>\n";
     $objectSource.="<div data-role='header'><h1>$name</h1></div>\n";
     $objectSource.="<div data-role='content'>\n";
     $objectSource.=$doc;
     $objectSource.="</div>\n</div>\n";
-    unset($doc, $data);
+    $objData=str_replace("{DATA}", $objectSource, $objData);
+    file_put_contents($baseDir.cleanString($name).'.html',$objData);
+    unset($doc, $data, $objData);
 }
 ?>

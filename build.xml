@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="TerrariaHB Tools" default="all">
-    <property name="output.dir" value="/User/sean/Projects/thbex/" />
+    <property name="output.dir" value="/User/sean/Projects/terrariahb/" />
     <target name='all'>
         <phingcall target="output" />
         <phingcall target="docs" />
