@@ -166,6 +166,13 @@ function loadObject($name) {
     $url="http://wiki.terrariaonline.com/$wname?action=render";
     curl_setopt($cp, CURLOPT_URL, $url);
     $data=curl_exec($cp);
+    if(strstr($data, "Unexpected Error")) {        
+        unset($data);
+        print "error\n";
+        print "\tRetrying $name ";
+        loadObject($name);
+        return false;
+    }
     $data=str_replace(array('&nbsp;','&ndash;'),array(' ','-'),$data);
     $doc=phpQuery::newDocument($data);
     pq('.editsection')->remove();
@@ -203,7 +210,12 @@ function loadObject($name) {
     foreach(pq('img') as $img) {
         $iSrc=pq($img)->attr('src');
         //$alt=str_replace(" ","_", $alt);        
-        if(substr($alt,0,4)!="img/") {
+        $alt=pq($img)->attr('alt');
+        if($alt=='Anomaly.png' || $alt=='Bug.png') {
+            pq($img)->attr('name',"img/$alt");
+            pq($img)->removeAttr('src');
+        }
+        else if(substr($alt,0,4)!="img/") {
             $info=pathinfo($iSrc);
             $iSrc=basename($iSrc,'.'.$info['extension']);
             //print substr($alt,0,4)."\n";
