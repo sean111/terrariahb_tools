@@ -56,7 +56,7 @@ while($mmenu=$sql->fetch_array()) {
 
             $src="<li class='object' name='$link'><a href='$link.html'>";
             if(!empty($img)) {
-                $src.="<img name=\"$img\" alt=\"$obj[name]\" width='20' height='20' class='ui-li-icon' />";
+                $src.="<img src=\"$img\" alt=\"$obj[name]\" width='20' height='20' class='ui-li-icon' />";
             }
             $src.=$obj['name']."</a></li>\n";
             if($obj['cat']) {                
@@ -182,6 +182,7 @@ function loadObject($name) {
     pq('#toc')->remove();
     pq('.thumbimage')->remove();
     pq('.internal')->remove();
+    pq('object')->remove();
     pq('.infobox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em;');
     pq('.craftbox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
     foreach(pq('table') as $table) {
@@ -200,7 +201,7 @@ function loadObject($name) {
     foreach(pq('a') as $link) {    
         $title=pq($link)->attr('title');
         if(in_array($title, $objects)) {
-            pq($link)->attr('href','#'.cleanString($title));
+            pq($link)->attr('href',cleanString($title).".html");
             pq($link)->wrap("<span class='link' />");
         }
         else {
@@ -212,8 +213,8 @@ function loadObject($name) {
         //$alt=str_replace(" ","_", $alt);        
         $alt=pq($img)->attr('alt');
         if($alt=='Anomaly.png' || $alt=='Bug.png') {
-            pq($img)->attr('name',"img/$alt");
-            pq($img)->removeAttr('src');
+            pq($img)->attr('src',"img/$alt");
+            //pq($img)->removeAttr('src');
         }
         else if(substr($alt,0,4)!="img/") {
             $info=pathinfo($iSrc);
@@ -223,10 +224,10 @@ function loadObject($name) {
             //print "Looking for: $alt\n";
             $imgSrc=getImage($iSrc);
             if(!empty($img)) {
-                pq($img)->attr('name',$imgSrc);
+                pq($img)->attr('src',$imgSrc);
             }
             //pq($img)->attr('src','img/'.$alt);
-            pq($img)->removeAttr('src');        
+            //pq($img)->removeAttr('src');        
         }
     }
     $doc=preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $doc);
