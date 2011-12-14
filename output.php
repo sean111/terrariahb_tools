@@ -56,7 +56,7 @@ while($mmenu=$sql->fetch_array()) {
 
             $src="<li class='object' name='$link'><a href='$link.html'>";
             if(!empty($img)) {
-                $src.="<img src=\"$img\" alt=\"$obj[name]\" width='20' height='20' class='ui-li-icon' />";
+                $src.="<img name=\"$img\" alt=\"$obj[name]\" width='20' height='20' class='ui-li-icon' />";
             }
             $src.=$obj['name']."</a></li>\n";
             if($obj['cat']) {                
@@ -213,8 +213,8 @@ function loadObject($name) {
         //$alt=str_replace(" ","_", $alt);        
         $alt=pq($img)->attr('alt');
         if($alt=='Anomaly.png' || $alt=='Bug.png') {
-            pq($img)->attr('src',"img/$alt");
-            //pq($img)->removeAttr('src');
+            pq($img)->attr('name',"img/$alt");
+            pq($img)->removeAttr('src');
         }
         else if(substr($alt,0,4)!="img/") {
             $info=pathinfo($iSrc);
@@ -224,10 +224,10 @@ function loadObject($name) {
             //print "Looking for: $alt\n";
             $imgSrc=getImage($iSrc);
             if(!empty($img)) {
-                pq($img)->attr('src',$imgSrc);
+                pq($img)->attr('name',$imgSrc);
             }
             //pq($img)->attr('src','img/'.$alt);
-            //pq($img)->removeAttr('src');        
+            pq($img)->removeAttr('src');        
         }
     }
     $doc=preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $doc);
