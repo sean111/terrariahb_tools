@@ -15,6 +15,9 @@ curl_setopt($cp, CURLOPT_ENCODING,'gzip');
 
 $db=new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
+print "Cleaning out html files";
+exec("rm $baseDir/*.html");
+
 $objects=array();
 $sql=$db->query('SELECT name FROM objects');
 while($tmp=$sql->fetch_array()) {
@@ -26,7 +29,7 @@ $mmSource='';
 $cSource='';
 //$objectSource='';
 $loadedObjects=array();
-$objTemplate=file_get_contents($baseDir.'objTemplate.html');
+$objTemplate=file_get_contents($objTemplateFile);
 
 while($mmenu=$sql->fetch_array()) {
     $stuff=array();
@@ -105,7 +108,7 @@ $versionNotes=file_get_contents('versionNotes.html');
 $versionNotes=nl2br($versionNotes);
 
 print "Creating $indexFile from $templateFile\n";
-$tfdata=file_get_contents($baseDir.$templateFile);
+$tfdata=file_get_contents($templateFile);
 $tfdata=str_replace("{MAINMENU}", $mmSource, $tfdata);
 $tfdata=str_replace("{CATS}", $cSource, $tfdata);
 //$tfdata=str_replace("{OBJECTS}", $objectSource, $tfdata);
@@ -188,12 +191,17 @@ function loadObject($name) {
     foreach(pq('table') as $table) {
         /*if(pq($table)->attr('class')==null) {
             pq($table)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
-        }*/       
+        }*/ 
+        $prevTable=null;      
         foreach(pq($table)->find('table') as $subTable) {
+            if(!$prevTable) {
+                $prevTable=pq($table);
+            }
             pq($subTable)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px; background: #f9f9f9;');
             pq($subTable)->attr('align','center');
             pq($subTable)->find('th')->attr('style', 'padding: 0.2em; background: #E4F0F7; color: #063B5E; text-align: center;');
-            pq($subTable)->insertAfter(pq($table));
+            pq($subTable)->insertAfter($prevTable);
+            $prevTable=pq($subTable);
         }
         //table-layout: fixed; word-wrap: break-word;        
     }
@@ -227,7 +235,7 @@ function loadObject($name) {
                 pq($img)->attr('name',$imgSrc);
             }
             //pq($img)->attr('src','img/'.$alt);
-            pq($img)->removeAttr('src');        
+            //pq($img)->removeAttr('src');        
         }
     }
     $doc=preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $doc);
