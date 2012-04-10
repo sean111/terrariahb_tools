@@ -28,7 +28,7 @@ function getImage($name) {
     $name=str_replace(" ", "_", $name);    
     $nameInfo=pathinfo($name);
     $name=strtolower($nameInfo['filename']);
-    $dir=$baseDir.$imageDir."/";
+    $dir=$baseDir.$imageDir;
     $files=glob($dir."*");
     foreach($files as $file) {
         $fInfo=pathinfo($file);
@@ -55,7 +55,7 @@ function loadObject($name) {
     $url="http://wiki.terrariaonline.com/$wname?action=render";
     curl_setopt($cp, CURLOPT_URL, $url);
     $data=curl_exec($cp);
-    if(strstr($data, "Unexpected Error")) {        
+    if(strstr($data, "Unexpected Error") || strstr($data, "unexpected error")) {        
         unset($data);
         print "error\n";
         print "\tRetrying $name ";
