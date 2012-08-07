@@ -14,6 +14,11 @@ function cleanString($string) {
     return $tmp;
 }
 
+function logError($error) {
+    $string="[".date('m/d/Y H:ia',time())."] $error\n";
+    file_put_contents('error.log',$string, FILE_APPEND);
+}
+
 /**
  * Checks the img directory for the correct image
  *
@@ -26,6 +31,7 @@ function getImage($name) {
     //TODO: Use regex instead of explode
     global $imageDir, $baseDir;
     $name=str_replace(" ", "_", $name);    
+    $name=str_replace("%27", "'", $name);
     $nameInfo=pathinfo($name);
     $name=strtolower($nameInfo['filename']);
     $dir=$baseDir.$imageDir;
@@ -37,6 +43,7 @@ function getImage($name) {
             return str_replace($baseDir,null,$file);
         }
     }
+    logError("Image not found $name");
     return false;
 }
 
@@ -72,20 +79,25 @@ function loadObject($name) {
     pq('.thumbimage')->remove();
     pq('.internal')->remove();
     pq('object')->remove();
-    pq('.infobox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em;');
-    pq('.craftbox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
+    pq('ul.gallery')->remove();
+    pq('#Gallery')->remove();
+    //pq('.infobox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em;');
+    //pq('.craftbox')->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
+    pq('th')->attr('style', '');
+    pq('table')->attr('style', '');
     foreach(pq('table') as $table) {
         /*if(pq($table)->attr('class')==null) {
             pq($table)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
         }*/ 
         $prevTable=null;      
-        foreach(pq($table)->find('table') as $subTable) {
+        foreach(pq($table)->find('table') as $subTable) {            
             if(!$prevTable) {
                 $prevTable=pq($table);
             }
-            pq($subTable)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px; background: #f9f9f9;');
+            //pq($subTable)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
             pq($subTable)->attr('align','center');
-            pq($subTable)->find('th')->attr('style', 'padding: 0.2em; background: #E4F0F7; color: #063B5E; text-align: center;');
+            //pq($subTable)->find('th')->attr('style', 'padding: 0.2em; background: #E4F0F7; color: #063B5E; text-align: center;');
+            //pq($subTable)->find('th')->attr('style', 'padding: 0.2em; text-align: center;');
             pq($subTable)->insertAfter($prevTable);
             $prevTable=pq($subTable);
         }
@@ -116,8 +128,9 @@ function loadObject($name) {
             }
             if(!empty($imgSrc)) {
                 pq($img)->attr('name',$imgSrc);
-            }            
+            }
             pq($img)->attr('src','');
+            pq($img)->attr('class', 'timg');
         }
     }
     $doc=preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $doc);

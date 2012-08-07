@@ -1,0 +1,699 @@
+Cleaning out html filesMenu Item: Version Notes
+Menu Item: Items
+	Adamantite Chainsaw - done!
+	Adamantite Drill - done!
+	Cobalt Chainsaw - done!
+	Cobalt Drill - done!
+	Copper Axe - done!
+	Copper Hammer - done!
+	Copper Pickaxe - done!
+	Dirt Rod - done!
+	Dual Hook - done!
+	Gold Axe - done!
+	Gold Hammer - done!
+	Gold Pickaxe - done!
+	Grappling Hook - done!
+	Hamdrax - done!
+	Iron Axe - done!
+	Iron Hammer - done!
+	Iron Pickaxe - done!
+	Ivy Whip - done!
+	Magic Mirror - done!
+	Meteor Hamaxe - done!
+	Molten Hamaxe - done!
+	Molten Pickaxe - done!
+	Mythril Chainsaw - done!
+	Mythril Drill - done!
+	Nightmare Pickaxe - done!
+	Orb of Light - done!
+	Purification Powder - done!
+	Pwnhammer - done!
+	Silver Axe - done!
+	Silver Hammer - done!
+	Silver Pickaxe - done!
+	The Breaker - done!
+	War Axe of the Night - done!
+	Wire Cutter - done!
+	Wooden Hammer - done!
+	Wrench - done!
+	Adamantite Glaive - done!
+	Adamantite Repeater - done!
+	Adamantite Sword - done!
+	Aqua Scepter - done!
+	Ball 'O Hurt - done!
+	Blade of Grass - done!
+	Blowpipe - done!
+	Blue Moon - done!
+	Bomb - done!
+	Bone - done!
+	Breaker Blade - done!
+	Clockwork Assault Rifle - done!
+	Cobalt Naginata - done!
+	Cobalt Repeater - done!
+	Cobalt Sword - done!
+	Copper Bow - done!
+	Copper Broadsword - done!
+	Copper Shortsword - done!
+	Crystal Storm - done!
+	Cursed Flames - done!
+	Dao of Pow - done!
+	Dark Lance - done!
+	Demon Bow - done!
+	Demon Scythe - done!
+	Dynamite - done!
+	Enchanted Boomerang - done!
+	Excalibur - done!
+	Fiery Greatsword - done!
+	Flamarang - done!
+	Flamelash - done!
+	Flamethrower - done!
+	Flintlock Pistol - done!
+	Flower of Fire - done!
+	Gold Bow - done!
+	Gold Broadsword - done!
+	Gold Shortsword - done!
+	Grenade - done!
+	Gungnir - done!
+	Hallowed Repeater - done!
+	Handgun - done!
+	Harpoon - done!
+	Holy Water - done!
+	Ice Rod - done!
+	Iron Bow - done!
+	Iron Broadsword - done!
+	Iron Shortsword - done!
+	Laser Rifle - done!
+	Light Disc - done!
+	Light's Bane - done!
+	Magic Dagger - done!
+	Magic Missile - done!
+	Magical Harp - done!
+	Megashark - done!
+	Minishark - done!
+	Molten Fury - done!
+	Muramasa - done!
+	Musket - done!
+	Mythril Halberd - done!
+	Mythril Repeater - done!
+	Mythril Sword - done!
+	Night's Edge - done!
+	Phaseblade - done!
+	Phasesaber - done!
+	Phoenix Blaster - done!
+	Poisoned Knife - done!
+	Rainbow Rod - done!
+	Sandgun - done!
+	Shotgun - done!
+	Shuriken - done!
+	Silver Bow - done!
+	Silver Broadsword - done!
+	Silver Shortsword - done!
+	Space Gun - done!
+	Spear - done!
+	Spiky Ball - done!
+	Staff of Regrowth - done!
+	Star Cannon - done!
+	Starfury - done!
+	Sticky Bomb - done!
+	Sunfury - done!
+	Thorn Chakrum - done!
+	Throwing Knife - done!
+	Trident - done!
+	Unholy Water - done!
+	Vile Powder - done!
+	Vilethorn - done!
+	Water Bolt - done!
+	Wooden Boomerang - done!
+	Wooden Bow - done!
+	Wooden Sword - done!
+	Adamantite Forge - done!
+	Alchemy Station - done!
+	Anvil Statue - done!
+	Axe Statue - done!
+	Banner - done!
+	Barrel - done!
+	Bat Statue - done!
+	Bathtub - done!
+	Bed - done!
+	Bench - done!
+	Bird Statue - done!
+	Blue Light - done!
+	Blue Torch - done!
+	Bomb Statue - done!
+	Book - done!
+	Bookcase - done!
+	Boomerang Statue - done!
+	Boot Statue - done!
+	Bottle - done!
+	Bow Statue - done!
+	Bunny Statue - done!
+	Candelabra - done!
+	Candle - done!
+	Chain Lantern - done!
+	Chest - done!
+	Chest Statue - done!
+	Chinese Lantern - done!
+	Clay Pot - done!
+	Cooking Pot - done!
+	Copper Chandelier - done!
+	Corrupt Statue - done!
+	Crab Statue - done!
+	Cross Statue - done!
+	Crystal Ball - done!
+	Crystal Shard - done!
+	Cursed Torch - done!
+	Demon Torch - done!
+	Disco Ball - done!
+	Dresser - done!
+	Explosives - done!
+	Eyeball Statue - done!
+	Fish Statue - done!
+	Furnace - done!
+	Gargoyle Statue - done!
+	Gloom Statue - done!
+	Goblin Statue - done!
+	Gold Chandelier - done!
+	Gold Chest - done!
+	Grandfather Clock - done!
+	Green Light - done!
+	Green Torch - done!
+	Hammer Statue - done!
+	Heart Statue - done!
+	Hellforge - done!
+	Hornet Statue - done!
+	Imp Statue - done!
+	Iron Anvil - done!
+	Jellyfish Statue - done!
+	Keg - done!
+	King Statue - done!
+	Lamp Post - done!
+	Lever - done!
+	Loom - done!
+	Mannequin - done!
+	Mushroom Statue - done!
+	Mythril Anvil - done!
+	Piano - done!
+	Pickaxe Statue - done!
+	Piggy Bank - done!
+	Pillar Statue - done!
+	Pink Vase - done!
+	Piranha Statue - done!
+	Pot Statue - done!
+	Potion Statue - done!
+	Pressure Plate - done!
+	Pump - done!
+	Purple Torch - done!
+	Queen Statue - done!
+	Reaper Statue - done!
+	Red Light - done!
+	Red Torch - done!
+	Safe - done!
+	Sawmill - done!
+	Shadow Chest - done!
+	Shield Statue - done!
+	Sign - done!
+	Silver Chandelier - done!
+	Skeleton Statue - done!
+	Skull Lantern - done!
+	Slime Statue - done!
+	Spear Statue - done!
+	Star Statue - done!
+	Statue - done!
+	Sunflower Statue - done!
+	Switch - done!
+	Sword Statue - done!
+	Throne - done!
+	Tiki Torch - done!
+	Timer - done!
+	Tinkerer's Workshop - done!
+	Toilet - done!
+	Torch - done!
+	Trash Can - done!
+	Tree Statue - done!
+	Water Candle - done!
+	White Torch - done!
+	Woman Statue - done!
+	Wood Platform - done!
+	Wooden Beam - done!
+	Wooden Chair - done!
+	Wooden Door - done!
+	Wooden Table - done!
+	Work Bench - done!
+	Yellow Torch - done!
+	Acorn - done!
+	Adamantite Bar - done!
+	Amethyst - done!
+	Angel Statue - done!
+	Antlion Mandible - done!
+	Bell - done!
+	Black Dye - done!
+	Black Lens - done!
+	Blinkroot - done!
+	Blinkroot Seeds - done!
+	Bottled Water - done!
+	Bowl - done!
+	Cactus - done!
+	Carrot - done!
+	Cobalt Bar - done!
+	Cobweb - done!
+	Coins - done!
+	Copper Bar - done!
+	Copper Coin - done!
+	Coral - done!
+	Corrupt Seeds - done!
+	Crystal Bullet - done!
+	Crystal Heart - done!
+	Cursed Arrow - done!
+	Cursed Bullet - done!
+	Cursed Flame - done!
+	Dark Shard - done!
+	Daybloom - done!
+	Daybloom Seeds - done!
+	Deathweed - done!
+	Deathweed Seeds - done!
+	Demon Altar - done!
+	Demonite Bar - done!
+	Diamond - done!
+	Emerald - done!
+	Fallen Star - done!
+	Feather - done!
+	Fireblossom - done!
+	Fireblossom Seeds - done!
+	Flaming Arrow - done!
+	Gel - done!
+	Glowing Mushroom - done!
+	Glowstick - done!
+	Goblin Battle Standard - done!
+	Gold Bar - done!
+	Gold Coin - done!
+	Golden Key - done!
+	Goldfish - done!
+	Grass Seeds - done!
+	Green Dye - done!
+	Hallowed Seeds - done!
+	Harp - done!
+	Hellfire Arrow - done!
+	Hellstone Bar - done!
+	Holy Arrow - done!
+	Hook - done!
+	Illegal Gun Parts - done!
+	Iron Bar - done!
+	Iron Chain - done!
+	Jester's Arrow - done!
+	Jungle Grass Seeds - done!
+	Jungle Spores - done!
+	Leather - done!
+	Lens - done!
+	Life Crystal - done!
+	Light Shard - done!
+	Mana Crystal - done!
+	Mechanical Eye - done!
+	Mechanical Skull - done!
+	Mechanical Worm - done!
+	Meteor Shot - done!
+	Meteorite Bar - done!
+	Moonglow - done!
+	Moonglow Seeds - done!
+	Mug - done!
+	Mushroom - done!
+	Mushroom Grass Seeds - done!
+	Musket Ball - done!
+	Mythril Bar - done!
+	Pixie Dust - done!
+	Platinum Coin - done!
+	Pot - done!
+	Present - done!
+	Rotten Chunk - done!
+	Ruby - done!
+	Sapphire - done!
+	Seed - done!
+	Shadow Key - done!
+	Shadow Orb - done!
+	Shadow Scale - done!
+	Shark Fin - done!
+	Silk - done!
+	Silver Bar - done!
+	Silver Bullet - done!
+	Silver Coin - done!
+	Slime Crown - done!
+	Snow Globe - done!
+	Soul of Flight - done!
+	Soul of Fright - done!
+	Soul of Light - done!
+	Soul of Might - done!
+	Soul of Night - done!
+	Soul of Sight - done!
+	Spell Tome - done!
+	Sticky Glowstick - done!
+	Stinger - done!
+	Sunflower - done!
+	Suspicious Looking Eye - done!
+	Tattered Cloth - done!
+	Topaz - done!
+	Unholy Arrow - done!
+	Unicorn Horn - done!
+	Vile Mushroom - done!
+	Vine - done!
+	Waterleaf - done!
+	Waterleaf Seeds - done!
+	Whoopie Cushion - done!
+	Wire - done!
+	Wooden Arrow - done!
+	Worm Food - done!
+	Worm Tooth - done!
+	Aglet - done!
+	Angel Wings - done!
+	Anklet of the Wind - done!
+	Band of Regeneration - done!
+	Band of Starpower - done!
+	Breathing Reed - done!
+	Cloud in a Balloon - done!
+	Cloud in a Bottle - done!
+	Cobalt Shield - done!
+	Compass - done!
+	Copper Watch - done!
+	Cross Necklace - done!
+	Demon Wings - done!
+	Depth Meter - done!
+	Diving Gear - done!
+	Feral Claws - done!
+	Flipper - done!
+	Gold Watch - done!
+	GPS - done!
+	Guide Voodoo Doll - done!
+	Hermes Boots - done!
+	Lucky Horseshoe - done!
+	Mana Flower - done!
+	Moon Charm - done!
+	Music Box - done!
+	Nature's Gift - done!
+	Neptune's Shell - done!
+	Obsidian Horseshoe - done!
+	Obsidian Shield - done!
+	Obsidian Skull - done!
+	Philosopher's Stone - done!
+	Ranger Emblem - done!
+	Rocket Boots - done!
+	Ruler - done!
+	Shackle - done!
+	Shiny Red Balloon - done!
+	Silver Watch - done!
+	Sorcerer Emblem - done!
+	Spectre Boots - done!
+	Star Cloak - done!
+	Titan Glove - done!
+	Toolbelt - done!
+	Warrior Emblem - done!
+	Active Stone Block - done!
+	Adamantite Ore - done!
+	Ash Block - done!
+	Blue Brick - done!
+	Blue Brick Wall - done!
+	Boulder - done!
+	Candy Cane Block - done!
+	Candy Cane Wall - done!
+	Clay Block - done!
+	Cobalt Brick - done!
+	Cobalt Brick Wall - done!
+	Cobalt Ore - done!
+	Cobweb - done!
+	Copper Brick - done!
+	Copper Brick Wall - done!
+	Copper Ore - done!
+	Dart Trap - done!
+	Demonite Brick - done!
+	Demonite Ore - done!
+	Dirt Block - done!
+	Dirt Wall - done!
+	Dungeon Brick - done!
+	Ebonsand Block - done!
+	Ebonstone Block - done!
+	Gem - done!
+	Glass - done!
+	Glass Wall - done!
+	Gold Brick - done!
+	Gold Brick Wall - done!
+	Gold Ore - done!
+	Gray Brick - done!
+	Gray Brick Wall - done!
+	Green Brick - done!
+	Green Brick Wall - done!
+	Green Candy Cane Block - done!
+	Green Candy Cane Wall - done!
+	Hellstone - done!
+	Hellstone Brick - done!
+	Inactive Stone Block - done!
+	Iridescent Brick - done!
+	Iridescent Brick Wall - done!
+	Iron Ore - done!
+	Meteorite - done!
+	Mud Block - done!
+	Mudstone Block - done!
+	Mudstone Brick Wall - done!
+	Mythril Brick - done!
+	Mythril Brick Wall - done!
+	Mythril Ore - done!
+	Obsidian - done!
+	Obsidian Brick - done!
+	Obsidian Brick Wall - done!
+	Pearlsand Block - done!
+	Pearlstone Block - done!
+	Pearlstone Brick - done!
+	Pearlstone Brick Wall - done!
+	Pink Brick - done!
+	Pink Brick Wall - done!
+	Planked Wall - done!
+	Red Brick - done!
+	Red Brick Wall - done!
+	Sand Block - done!
+	Silt Block - done!
+	Silver Brick - done!
+	Silver Brick Wall - done!
+	Silver Ore - done!
+	Snow Block - done!
+	Snow Brick - done!
+	Snow Brick Wall - done!
+	Spike - done!
+	Stone Block - done!
+	Stone Wall - done!
+	Wood - done!
+	Wood Wall - done!
+	Amethyst - done!
+	Diamond - done!
+	Emerald - done!
+	Ruby - done!
+	Sapphire - done!
+	Topaz - done!
+	Adamantite armor - done!
+	Bucket - done!
+	Cobalt armor - done!
+	Copper Armor - done!
+	Diving Helmet - done!
+	Goggles - done!
+	Gold Armor - done!
+	Hallowed armor - done!
+	Iron Armor - done!
+	Jungle Armor - done!
+	Meteor Armor - done!
+	Mining armor - done!
+	Mining Helmet - done!
+	Molten Armor - done!
+	Mythril armor - done!
+	Necro Armor - done!
+	Shadow Armor - done!
+	Silver Armor - done!
+	Wizard Hat - done!
+	Archaeologist's Suit - done!
+	Bunny Hood - done!
+	Clown costume - done!
+	Familiar Clothes - done!
+	Fish Bowl - done!
+	Gold Crown - done!
+	Hero's Clothes - done!
+	Jungle Rose - done!
+	Mime Mask - done!
+	Ninja Clothes - done!
+	Plumber's Clothes - done!
+	Red Hat - done!
+	Robe - done!
+	Robot Hat - done!
+	Santa costume - done!
+	Summer Hat - done!
+	Sunglasses - done!
+	The Doctor's Clothes - done!
+	Tuxedo - done!
+	Ale - done!
+	Archery Potion - done!
+	Battle Potion - done!
+	Bowl of Soup - done!
+	Fairy Bell - done!
+	Featherfall Potion - done!
+	Gills Potion - done!
+	Gravitation Potion - done!
+	Greater Healing Potion - done!
+	Greater Mana Potion - done!
+	Healing Potion - done!
+	Hunter Potion - done!
+	Invisibility Potion - done!
+	Ironskin Potion - done!
+	Lesser Healing Potion - done!
+	Lesser Mana Potion - done!
+	Lesser Restoration Potion - done!
+	Magic Power Potion - done!
+	Mana Potion - done!
+	Mana Regeneration Potion - done!
+	Night Owl Potion - done!
+	Obsidian Skin Potion - done!
+	Regeneration Potion - done!
+	Restoration Potion - done!
+	Shine Potion - done!
+	Spelunker Potion - done!
+	Swiftness Potion - done!
+	Thorns Potion - done!
+	Water Walking Potion - done!
+Menu Item: Monsters
+	Angler Fish - done!
+	Angry Bones - done!
+	Antlion - done!
+	Armored Skeleton - done!
+	Baby Slime - done!
+	Bat - done!
+	Bird - done!
+	Black Slime - done!
+	Blazing Wheel - done!
+	Blue Jellyfish - done!
+	Blue Slime - done!
+	Bone Serpent - done!
+	Bunny - done!
+	Cave Bat - done!
+	Chaos Elemental - done!
+	Clinger - done!
+	Corrupt Bunny - done!
+	Corrupt Goldfish - done!
+	Corrupt Slime - done!
+	Corruptor - done!
+	Crab - done!
+	Cursed Skull - done!
+	Dark Caster - done!
+	Demon - done!
+	Demon Eye - done!
+	Devourer - done!
+	Digger - done!
+	Digger - done!
+	Dungeon Guardian - done!
+	Dungeon Slime - done!
+	Eater of Souls - done!
+	Fire Imp - done!
+	Gastropod - done!
+	Giant Bat - done!
+	Giant Worm - done!
+	Goldfish - done!
+	Green Jellyfish - done!
+	Green Slime - done!
+	Harpy - done!
+	Hellbat - done!
+	Hornet - done!
+	Illuminant Bat - done!
+	Illuminant Slime - done!
+	Jellyfish - done!
+	Jungle Bat - done!
+	Jungle Slime - done!
+	Lava Slime - done!
+	Man Eater - done!
+	Meteor Head - done!
+	Mimic - done!
+	Mother Slime - done!
+	Mummy - done!
+	Pink Jellyfish - done!
+	Piranha - done!
+	Pixie - done!
+	Possessed Armor - done!
+	Purple Slime - done!
+	Red Slime - done!
+	Servant of Cthulhu - done!
+	Shark - done!
+	Skeleton - done!
+	Skeleton Archer - done!
+	Slime - done!
+	Slimeling - done!
+	Slimer - done!
+	Snatcher - done!
+	Spike Ball - done!
+	Toxic Sludge - done!
+	Unicorn - done!
+	Voodoo Demon - done!
+	Vulture - done!
+	Wandering Eye - done!
+	World Feeder - done!
+	Wraith - done!
+	Yellow Slime - done!
+	Zombie - done!
+	Clown - done!
+	Cursed Hammer - done!
+	Dead Miner - done!
+	Doctor Bones - done!
+	Enchanted Sword - done!
+	Goblin Archer - done!
+	Goblin Peon - done!
+	Goblin Scout - done!
+	Goblin Sorcerer - done!
+	Goblin Thief - done!
+	Goblin Warrior - done!
+	Mister Stabby - done!
+	Pinky - done!
+	Snow Balla - done!
+	Snowman Gangsta - done!
+	The Groom - done!
+	Tim - done!
+	Undead Miner - done!
+	Werewolf - done!
+	King Slime - done!
+	Probe - done!
+	Wyvern - done!
+	Eater of Worlds - done!
+	Eye of Cthulhu - done!
+	Skeletron - done!
+	Skeletron Prime - done!
+	The Destroyer - done!
+	The Twins - done!
+	Wall of Flesh - done!
+Menu Item: Enviroments
+	Cavern Layer - done!
+	Deserts - done!
+	Dungeon - done!
+	Floating Islands - done!
+	Forests - done!
+	Jungle - done!
+	Meteorite (biome) - done!
+	Ocean - done!
+	Snow Biome - done!
+	The Corruption - done!
+	The Hallow - done!
+	The Underworld - done!
+	Underground Jungle - done!
+	Underground Layer - done!
+Menu Item: NPCs
+	Arms Dealer - done!
+	Clothier - done!
+	Demolitionist - done!
+	Dryad - done!
+	Goblin Tinkerer - done!
+	Guide - done!
+	Mechanic - done!
+	Merchant - done!
+	Nurse - done!
+	Old Man - done!
+	Santa Claus - done!
+	Wizard - done!
+Menu Item: Mechanics
+	Attack speed - done!
+	Buffs - done!
+	Debuffs - done!
+	Defense - done!
+	Fall damage - done!
+	Map size - done!
+	Player stats - done!
+Menu Item: Search
+Menu Item: About
+Version Notes
+Creating index.html from template.html
