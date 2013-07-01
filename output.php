@@ -59,9 +59,11 @@ while($mmenu=$sql->fetch_array()) {
 
             $src="<li class='object' name='$link'><a href='$link.html'>";
             if(!empty($img)) {
-                $src.="<img name=\"$img\" alt=\"$obj[name]\" width='20px' height='15px' class='ui-li-icon' />";
+                //$src.="<img name=\"$img\" alt=\"$obj[name]\" width='20px' height='15px'/>";
+                //$src.="<img name=\"$img\" alt=\"$obj[name]\"/><h3>";
+                $src.="<img name=\"$img\" alt=\"$obj[name]\" width='20px' height='15px' class='ui-li-icon' /><h3>";
             }
-            $src.=$obj['name']."</a></li>\n";
+            $src.=$obj['name']."</h3></a></li>\n";
             if($obj['cat']) {                
                 $stuff[$obj['cat']][]=$src;
             }

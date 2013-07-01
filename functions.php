@@ -26,11 +26,11 @@ function logError($error) {
  * Spaces are also replaced with "_" to keep up the names from the wiki.
  *
  * @param string $name The name of the object
- **/ 
+ **/
 function getImage($name) {
     //TODO: Use regex instead of explode
     global $imageDir, $baseDir;
-    $name=str_replace(" ", "_", $name);    
+    $name=str_replace(" ", "_", $name);
     $name=str_replace("%27", "'", $name);
     $nameInfo=pathinfo($name);
     $name=strtolower($nameInfo['filename']);
@@ -56,13 +56,14 @@ function getImage($name) {
  * @param string Name of the object
  **/
 function loadObject($name) {
-    global $cp, $objects, $objTemplate, $baseDir;    
+    global $cp, $objects, $objTemplate, $baseDir;
     $objectSource="";
     $wname=str_replace(" ", "_", $name);
-    $url="http://wiki.terrariaonline.com/$wname?action=render";
+    //$url="http://wiki.terrariaonline.com/$wname?action=render";
+    $url = "http://terraria.gamepedia.com/$wname?action=render";
     curl_setopt($cp, CURLOPT_URL, $url);
     $data=curl_exec($cp);
-    if(strstr($data, "Unexpected Error") || strstr($data, "unexpected error")) {        
+    if(strstr($data, "Unexpected Error") || strstr($data, "unexpected error")) {
         unset($data);
         print "error\n";
         print "\tRetrying $name ";
@@ -88,9 +89,9 @@ function loadObject($name) {
     foreach(pq('table') as $table) {
         /*if(pq($table)->attr('class')==null) {
             pq($table)->attr('style','width: 85%; font-size:89%; -moz-border-radius: .7em; -webkit-border-radius: .7em; border-radius: .7em; border: 1px solid #aaaaaa; padding: 0.2em; margin-bottom:5px;');
-        }*/ 
-        $prevTable=null;      
-        foreach(pq($table)->find('table') as $subTable) {            
+        }*/
+        $prevTable=null;
+        foreach(pq($table)->find('table') as $subTable) {
             if(!$prevTable) {
                 $prevTable=pq($table);
             }
@@ -101,10 +102,10 @@ function loadObject($name) {
             pq($subTable)->insertAfter($prevTable);
             $prevTable=pq($subTable);
         }
-        //table-layout: fixed; word-wrap: break-word;        
+        //table-layout: fixed; word-wrap: break-word;
     }
     //pq('table table')->wrap('<table><tr><td></td></tr></table>');
-    foreach(pq('a') as $link) {    
+    foreach(pq('a') as $link) {
         $title=pq($link)->attr('title');
         if(in_array($title, $objects)) {
             pq($link)->attr('href',cleanString($title).".html");
@@ -115,10 +116,14 @@ function loadObject($name) {
         }
     }
     foreach(pq('img') as $img) {
-        $iSrc=pq($img)->attr('src');        
+        $iSrc=pq($img)->attr('src');
         $alt=pq($img)->attr('alt');
         if($alt=='Anomaly.png' || $alt=='Bug.png') {
             pq($img)->attr('name',"img/$alt");
+            pq($img)->removeAttr('src');
+        }
+        else if($alt == 'Spectral Armor.png') {
+            pq($img)->attr('name', 'img/Spectral_Armor_Chest.png');
             pq($img)->removeAttr('src');
         }
         else {
